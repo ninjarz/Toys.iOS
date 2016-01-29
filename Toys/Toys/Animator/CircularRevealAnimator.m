@@ -21,7 +21,7 @@
 
 @implementation CircularRevealAnimator
 
-- (instancetype __nullable)initWithCenter:(CGPoint)center duration:(CFTimeInterval)duration completion:(void (^ __nullable)(void))completion
+- (instancetype __nullable)initWithCenter:(CGPoint)center duration:(CFTimeInterval)duration revert:(BOOL)revert completion:(void (^ __nullable)(void))completion
 {
     if(self = [super init])
     {
@@ -29,24 +29,35 @@
         mSnapshotView = [rootController.view snapshotViewAfterScreenUpdates:NO];
         [rootController.view addSubview:mSnapshotView];
         
-        CGFloat x = center.x < rootController.view.frame.size.width - center.x ? rootController.view.frame.size.width - center.x : center.x;
-        CGFloat y = center.y < rootController.view.frame.size.height - center.y ? rootController.view.frame.size.height - center.y : center.y;
+        CGFloat x = center.x < rootController.view.bounds.size.width - center.x ? rootController.view.bounds.size.width - center.x : center.x;
+        CGFloat y = center.y < rootController.view.bounds.size.height - center.y ? rootController.view.bounds.size.height - center.y : center.y;
         CGFloat endRadius = sqrt(x * x + y * y);
         
         mLayer = mSnapshotView.layer;
         mCompletion = completion;
         
         CGPathRef startPathTmp = CGPathCreateWithEllipseInRect([CircularRevealAnimator squareWithCenter:center radius:0], NULL);
-        CGMutablePathRef startPath = CGPathCreateMutable();
-        CGPathAddRect(startPath, nil, mLayer.bounds);
-        CGPathAddPath(startPath, nil, startPathTmp);
+        CGMutablePathRef startPath;
         CGPathRef endPathTmp = CGPathCreateWithEllipseInRect([CircularRevealAnimator squareWithCenter:center radius:endRadius], NULL);
-        CGMutablePathRef endPath = CGPathCreateMutable();
-        CGPathAddRect(endPath, nil, mLayer.bounds);
-        CGPathAddPath(endPath, nil, endPathTmp);
+        CGMutablePathRef endPath;
+        if (revert)
+        {
+            startPath = CGPathCreateMutableCopy(endPathTmp);
+            endPath = CGPathCreateMutableCopy(startPathTmp);
+        }
+        else
+        {
+            startPath = CGPathCreateMutable();
+            CGPathAddRect(startPath, nil, mLayer.bounds);
+            CGPathAddPath(startPath, nil, startPathTmp);
+            endPath = CGPathCreateMutable();
+            CGPathAddRect(endPath, nil, mLayer.bounds);
+            CGPathAddPath(endPath, nil, endPathTmp);
+        }
         
         mMaskLayer = [CAShapeLayer layer];
         mMaskLayer.path = endPath;
+        mMaskLayer.fillColor = [UIColor redColor].CGColor;
         mMaskLayer.fillRule = kCAFillRuleEvenOdd;
         mMaskLayer.frame = mLayer.bounds;
         mLayer.mask = mMaskLayer;

@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3A3F3DAF1C55E3A9004A99FD /* MagicTextStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3F3DAE1C55E3A9004A99FD /* MagicTextStyle.m */; };
+		3A924E761C5772E0008F2105 /* MagicTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A924E751C5772E0008F2105 /* MagicTextView.m */; };
+		3A924E791C578232008F2105 /* MagicTextComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A924E781C578232008F2105 /* MagicTextComponent.m */; };
 		3AE9A40A1C4686C50024B241 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AE9A4091C4686C50024B241 /* main.m */; };
 		3AE9A40D1C4686C50024B241 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AE9A40C1C4686C50024B241 /* AppDelegate.m */; };
 		3AE9A4101C4686C50024B241 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AE9A40F1C4686C50024B241 /* ViewController.m */; };
@@ -36,6 +39,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3A3F3DAD1C55E3A9004A99FD /* MagicTextStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MagicTextStyle.h; path = MagicText/MagicTextStyle.h; sourceTree = "<group>"; };
+		3A3F3DAE1C55E3A9004A99FD /* MagicTextStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MagicTextStyle.m; path = MagicText/MagicTextStyle.m; sourceTree = "<group>"; };
+		3A924E741C5772E0008F2105 /* MagicTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MagicTextView.h; path = MagicText/MagicTextView.h; sourceTree = "<group>"; };
+		3A924E751C5772E0008F2105 /* MagicTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MagicTextView.m; path = MagicText/MagicTextView.m; sourceTree = "<group>"; };
+		3A924E771C578232008F2105 /* MagicTextComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MagicTextComponent.h; path = MagicText/MagicTextComponent.h; sourceTree = "<group>"; };
+		3A924E781C578232008F2105 /* MagicTextComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MagicTextComponent.m; path = MagicText/MagicTextComponent.m; sourceTree = "<group>"; };
 		3AE9A4051C4686C50024B241 /* Toys.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Toys.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3AE9A4091C4686C50024B241 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		3AE9A40B1C4686C50024B241 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -81,6 +90,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3A3F3DAC1C55E32C004A99FD /* MagicText */ = {
+			isa = PBXGroup;
+			children = (
+				3A3F3DAD1C55E3A9004A99FD /* MagicTextStyle.h */,
+				3A3F3DAE1C55E3A9004A99FD /* MagicTextStyle.m */,
+				3A924E741C5772E0008F2105 /* MagicTextView.h */,
+				3A924E751C5772E0008F2105 /* MagicTextView.m */,
+				3A924E771C578232008F2105 /* MagicTextComponent.h */,
+				3A924E781C578232008F2105 /* MagicTextComponent.m */,
+			);
+			name = MagicText;
+			sourceTree = "<group>";
+		};
 		3AE9A3FC1C4686C50024B241 = {
 			isa = PBXGroup;
 			children = (
@@ -104,6 +126,7 @@
 		3AE9A4071C4686C50024B241 /* Toys */ = {
 			isa = PBXGroup;
 			children = (
+				3A3F3DAC1C55E32C004A99FD /* MagicText */,
 				3AE9A43B1C4686F60024B241 /* Animator */,
 				3AE9A40B1C4686C50024B241 /* AppDelegate.h */,
 				3AE9A40C1C4686C50024B241 /* AppDelegate.m */,
@@ -282,10 +305,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3A924E791C578232008F2105 /* MagicTextComponent.m in Sources */,
+				3A924E761C5772E0008F2105 /* MagicTextView.m in Sources */,
 				3AE9A4101C4686C50024B241 /* ViewController.m in Sources */,
 				3AE9A40D1C4686C50024B241 /* AppDelegate.m in Sources */,
 				3AE9A43E1C468BD90024B241 /* CircularRevealAnimator.m in Sources */,
 				3AE9A40A1C4686C50024B241 /* main.m in Sources */,
+				3A3F3DAF1C55E3A9004A99FD /* MagicTextStyle.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -509,6 +535,7 @@
 				3AE9A4341C4686C50024B241 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		3AE9A4351C4686C50024B241 /* Build configuration list for PBXNativeTarget "ToysTests" */ = {
 			isa = XCConfigurationList;
@@ -517,6 +544,7 @@
 				3AE9A4371C4686C50024B241 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		3AE9A4381C4686C50024B241 /* Build configuration list for PBXNativeTarget "ToysUITests" */ = {
 			isa = XCConfigurationList;
@@ -525,6 +553,7 @@
 				3AE9A43A1C4686C50024B241 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -14,7 +14,7 @@
     
 }
 
-- (instancetype __nullable)initWithCenter:(CGPoint)center duration:(CFTimeInterval)duration completion:(void (^ __nullable)(void))completion;
+- (instancetype __nullable)initWithCenter:(CGPoint)center duration:(CFTimeInterval)duration revert:(BOOL)revert completion:(void (^ __nullable)(void))completion;
 - (instancetype __nullable)initWithLayer:(CALayer* __nonnull)layer center:(CGPoint)center startRadius:(CGFloat)startRadius endRadius:(CGFloat)endRadius duration:(CFTimeInterval)duration completion:(void (^ __nullable)(void))completion;
 - (void)start;
 
