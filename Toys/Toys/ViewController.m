@@ -10,7 +10,8 @@
 #import "MagicTextView.h"
 #import "MagicTextStyle.h"
 
-@interface ViewController ()
+
+@interface ViewController() <MagicTextDelegate>
 {
     IBOutlet UIView *mMagicView;
 }
@@ -51,14 +52,33 @@
     
     MagicTextView *magicTextView = [[MagicTextView alloc] initWithFrame:mMagicView.bounds];
     magicTextView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-    magicTextView.text = @"<p><a>My</a><s> </s><test><s> </s><a><word>childhood</word></a> <a>was</a><s> </s></test><s> </s><a>a</a> <a>happy</a> <a>and</a> <a>innocent</a> <a>time</a> - <a>I</a> <a>was</a> <a>lucky</a></p>";
     magicTextView.backgroundColor = [UIColor colorWithRed:0.9 green:0.89 blue:0.84 alpha:1.000];
+    magicTextView.delegate = self;
+    magicTextView.text = @"<p><a>My</a><s> </s><test><s> </s><a><word>childhood</word></a> <a>was</a><s> </s></test><s> </s><a>a</a> <a>happy</a> <a>and</a> <a>innocent</a> <a>time</a> - <a>I</a> <a>was</a> <a>lucky</a></p>";
     [mMagicView addSubview:magicTextView];
 }
 
-- (void)didReceiveMemoryWarning {
+- (void)didReceiveMemoryWarning
+{
     [super didReceiveMemoryWarning];
 
+}
+
+#pragma mark - MagicTextDelegate
+
+- (void)componentDidTouchDown:(nullable MagicTextComponent*)component
+{
+    sleep(0);
+}
+
+- (void)componentDidTouchUpInside:(nullable MagicTextComponent*)component
+{
+    sleep(0);
+}
+
+- (void)componentDidTouchUpOutside:(nullable MagicTextComponent*)component
+{
+    sleep(0);
 }
 
 @end

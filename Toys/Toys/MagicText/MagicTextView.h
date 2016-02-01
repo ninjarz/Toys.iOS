@@ -8,12 +8,25 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreText/CoreText.h>
+#import "MagicTextComponent.h"
+
+
+@protocol MagicTextDelegate <NSObject>
+@optional
+
+- (void)componentDidTouchDown:(nullable MagicTextComponent*)component;
+- (void)componentDidTouchUpInside:(nullable MagicTextComponent*)component;
+- (void)componentDidTouchUpOutside:(nullable MagicTextComponent*)component;
+
+@end
+
 
 @interface MagicTextView : UIView
 
-@property(nonatomic) NSString *text;
+@property(nonatomic, nullable) NSString *text;
+@property(assign, nullable) id<MagicTextDelegate> delegate;
 
-- (instancetype)initWithFrame:(CGRect)frame;
+- (nonnull instancetype)initWithFrame:(CGRect)frame;
 - (void)parse;
 
 @end

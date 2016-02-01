@@ -15,6 +15,22 @@
       </ContextState>
       <ContextState
          contextName = "-[MagicTextView drawRect:]:MagicTextView.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "mComponents">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[ViewController componentDidTouchDown:]:ViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "component">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[MagicTextView onButtonTouchDown:]:MagicTextView.m">
       </ContextState>
    </ContextStates>
 </VariablesViewState>

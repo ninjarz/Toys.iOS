@@ -9,24 +9,25 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
+
 @interface MagicTextStyle : NSObject
 {
     
 }
 
-@property(nonatomic, strong) NSString *tag;
-@property(nonatomic, strong) NSMutableDictionary *attributes;
+@property(nonatomic, strong, nullable) NSString *tag;
+@property(nonatomic, strong, nullable) NSMutableDictionary *attributes;
 @property(nonatomic) BOOL isClickable;
 
-- (instancetype)initWithTag:(NSString*)tag;
+- (nonnull instancetype)initWithTag:(nullable NSString*)tag;
 
-- (void)setForegroundColor:(UIColor*)color;
-- (void)setBackgroundColor:(UIColor*)color;
-- (void)setFont:(UIFont*)font;
+- (void)setForegroundColor:(nullable UIColor*)color;
+- (void)setBackgroundColor:(nullable UIColor*)color;
+- (void)setFont:(nullable UIFont*)font;
 
-+ (NSMutableDictionary*)styles;
-+ (void)addStyle:(MagicTextStyle*)style;
-+ (void)removeStyleByTag:(NSString*)tag;
-+ (instancetype)styleWithTag:(NSString*)tag;
++ (nonnull NSMutableDictionary*)styles;
++ (void)addStyle:(nonnull MagicTextStyle*)style;
++ (void)removeStyleByTag:(nonnull NSString*)tag;
++ (nonnull instancetype)styleWithTag:(nullable NSString*)tag;
 
 @end

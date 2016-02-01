@@ -7,19 +7,26 @@
 //
 //----------------------------------------------------------------------------------------------------
 // <br>
-// <a>
+//
 //----------------------------------------------------------------------------------------------------
 
 #import "MagicTextView.h"
-#import "MagicTextComponent.h"
+
 
 @interface MagicTextButton : UIButton
+
 @property NSInteger index;
 @property NSString *data;
+
 @end
 
 @implementation MagicTextButton
+
+@synthesize index;
+@synthesize data;
+
 @end
+
 
 @interface MagicTextView()
 {
@@ -192,9 +199,9 @@
             {
                 float height = 0.f;
                 CFArrayRef lines = CTFrameGetLines(frame);
-                for (CFIndex i = 0; i < CFArrayGetCount(lines); ++i)
+                for (CFIndex j = 0; j < CFArrayGetCount(lines); ++j)
                 {
-                    CTLineRef line = (CTLineRef)CFArrayGetValueAtIndex(lines, i);
+                    CTLineRef line = (CTLineRef)CFArrayGetValueAtIndex(lines, j);
                     
                     CGFloat ascent = 0.f;
                     CGFloat descent = 0.f;
@@ -202,7 +209,7 @@
                     CTLineGetTypographicBounds(line, &ascent, &descent, &leading);
                     CFRange lineRange = CTLineGetStringRange(line);
                     CGPoint origin;
-                    CTFrameGetLineOrigins(frame, CFRangeMake(i, 1), &origin);
+                    CTFrameGetLineOrigins(frame, CFRangeMake(j, 1), &origin);
                     
                     if ( (component.position < lineRange.location && component.position+component.text.length>(u_int16_t)(lineRange.location)) || (component.position>=lineRange.location && component.position<lineRange.location+lineRange.length))
                     {
@@ -212,10 +219,12 @@
                         CGFloat width = end - begin;
                         
                         MagicTextButton *button = [[MagicTextButton alloc] initWithFrame:CGRectMake(begin + origin.x, height, width, ascent + descent)];
-                        [button setBackgroundColor:[UIColor colorWithWhite:0 alpha:0]];
+                        [button setBackgroundColor:[UIColor colorWithWhite:0 alpha:0.5]];
                         [button setIndex:i];
                         [button setData:component.text];
-                        [button addTarget:self action:@selector(onButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+                        [button addTarget:self action:@selector(onButtonTouchDown:) forControlEvents:UIControlEventTouchDown];
+                        [button addTarget:self action:@selector(onButtonTouchUpInside:) forControlEvents:UIControlEventTouchUpInside];
+                        [button addTarget:self action:@selector(onButtonTouchUpOutside:) forControlEvents:UIControlEventTouchUpOutside];
                         [self addSubview:button];
                     }
 
@@ -237,6 +246,7 @@
 - (void)setText:(NSString*)text
 {
     mText = text;
+    mSelected = -1;
     mIsTextDirty = YES;
     [self parse];
     [self setNeedsDisplay];
@@ -251,14 +261,54 @@
 
 #pragma mark - click
 
-- (void)onButtonClicked:(id)sender
+- (void)onButtonTouchDown:(id)sender
 {
     MagicTextButton *button = (MagicTextButton*)sender;
     mSelected = button.index;
     
-    // Todo: 添加回调
-    NSLog(@"%@", button.data);
+    if (self.delegate)
+    {
+        if ([self.delegate respondsToSelector:@selector(componentDidTouchDown:)])
+        {
+            [self.delegate componentDidTouchDown:[mComponents objectAtIndex:button.index]];
+        }
+    }
     
+    NSLog(@"%s:%@", __FUNCTION__, button.data);
+    [self setNeedsDisplay];
+}
+
+- (void)onButtonTouchUpInside:(id)sender
+{
+    MagicTextButton *button = (MagicTextButton*)sender;
+    mSelected = -1;
+    
+    if (self.delegate)
+    {
+        if ([self.delegate respondsToSelector:@selector(componentDidTouchUpInside:)])
+        {
+            [self.delegate componentDidTouchUpInside:[mComponents objectAtIndex:button.index]];
+        }
+    }
+    
+    NSLog(@"%s:%@", __FUNCTION__, button.data);
+    [self setNeedsDisplay];
+}
+
+- (void)onButtonTouchUpOutside:(id)sender
+{
+    MagicTextButton *button = (MagicTextButton*)sender;
+    mSelected = -1;
+    
+    if (self.delegate)
+    {
+        if ([self.delegate respondsToSelector:@selector(componentDidTouchUpOutside:)])
+        {
+            [self.delegate componentDidTouchUpOutside:[mComponents objectAtIndex:button.index]];
+        }
+    }
+    
+    NSLog(@"%s:%@", __FUNCTION__, button.data);
     [self setNeedsDisplay];
 }
 

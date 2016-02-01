@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "MagicTextStyle.h"
 
+
 @interface MagicTextComponent : NSObject
 
 @property NSInteger position;

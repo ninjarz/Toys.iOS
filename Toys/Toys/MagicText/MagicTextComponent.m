@@ -8,6 +8,7 @@
 
 #import "MagicTextComponent.h"
 
+
 @interface MagicTextComponent()
 {
     NSInteger mPosition;

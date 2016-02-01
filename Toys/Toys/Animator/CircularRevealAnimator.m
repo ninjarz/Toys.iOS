@@ -8,6 +8,7 @@
 
 #import "CircularRevealAnimator.h"
 
+
 @interface CircularRevealAnimator()
 {
     CALayer *mLayer;
@@ -21,7 +22,7 @@
 
 @implementation CircularRevealAnimator
 
-- (instancetype __nullable)initWithCenter:(CGPoint)center duration:(CFTimeInterval)duration revert:(BOOL)revert completion:(void (^ __nullable)(void))completion
+- (nullable instancetype)initWithCenter:(CGPoint)center duration:(CFTimeInterval)duration revert:(BOOL)revert completion:(nullable void (^)(void))completion
 {
     if(self = [super init])
     {
@@ -72,7 +73,7 @@
     return self;
 }
 
-- (instancetype __nullable)initWithLayer:(CALayer* __nonnull)layer center:(CGPoint)center startRadius:(CGFloat)startRadius endRadius:(CGFloat)endRadius duration:(CFTimeInterval)duration completion:(void (^ __nullable)(void))completion
+- (nullable instancetype)initWithLayer:(nonnull CALayer*)layer center:(CGPoint)center startRadius:(CGFloat)startRadius endRadius:(CGFloat)endRadius duration:(CFTimeInterval)duration completion:(nullable void (^)(void))completion
 {
     if(self = [super init])
     {

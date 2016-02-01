@@ -8,6 +8,7 @@
 
 #import "MagicTextStyle.h"
 
+
 @interface MagicTextStyle() <NSMutableCopying>
 {
     NSString *mTag;
@@ -23,7 +24,7 @@
 @synthesize attributes = mAttributes;
 @synthesize isClickable = mIsClickable;
 
-- (instancetype)initWithTag:(NSString*)tag;
+- (nonnull instancetype)initWithTag:(NSString*)tag;
 {
     if (self = [super init])
     {
@@ -37,24 +38,19 @@
 
 #pragma mark - API
 
-- (void)setForegroundColor:(UIColor*)color
+- (void)setForegroundColor:(nullable UIColor*)color
 {
     [mAttributes setObject:color forKey:NSForegroundColorAttributeName];
 }
 
-- (void)setBackgroundColor:(UIColor*)color
+- (void)setBackgroundColor:(nullable UIColor*)color
 {
     [mAttributes setObject:color forKey:NSBackgroundColorAttributeName];
 }
 
-- (void)setFont:(UIFont*)font
+- (void)setFont:(nullable UIFont*)font
 {
     [mAttributes setValue:font forKey:NSFontAttributeName];
-}
-
-- (void)setClickable:(BOOL)clickable onClicked:(void (^ __nullable)(void))onClicked
-{
-    
 }
 
 #pragma mark - Copying
@@ -71,7 +67,7 @@
 
 #pragma mark - static
 
-+ (NSMutableDictionary*)styles
++ (nonnull NSMutableDictionary*)styles
 {
     static NSMutableDictionary *styles = nil;
     static dispatch_once_t once;
@@ -83,21 +79,21 @@
     return styles;
 }
 
-+ (void)addStyle:(MagicTextStyle*)style
++ (void)addStyle:(nonnull MagicTextStyle*)style
 {
     NSMutableDictionary *styles = [self styles];
     
     [styles setObject:style forKey:style.tag];
 }
 
-+ (void)removeStyleByTag:(NSString*)tag
++ (void)removeStyleByTag:(nonnull NSString*)tag
 {
     NSMutableDictionary *styles = [self styles];
     
     [styles removeObjectForKey:tag];
 }
 
-+ (instancetype)styleWithTag:(NSString*)tag
++ (nonnull instancetype)styleWithTag:(nullable NSString*)tag
 {
     NSMutableDictionary *styles = [self styles];
     
