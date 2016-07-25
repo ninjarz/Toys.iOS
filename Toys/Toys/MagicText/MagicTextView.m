@@ -30,18 +30,20 @@
 
 @interface MagicTextView()
 {
-    UITextView *mTextView;
-    
     BOOL mIsTextDirty;
     NSString *mText;
     NSString *mPlainText;
     NSInteger mSelected;
     NSMutableArray *mComponents;
+    NSMutableAttributedString *mAttributedText;
 }
 
 @end
 
 @implementation MagicTextView
+
+@synthesize textSize = mTextSize;
+@synthesize delegate;
 
 - (instancetype)init
 {
@@ -67,23 +69,15 @@
 {
     [self setBackgroundColor:[UIColor clearColor]];
     
-    mTextView = [[UITextView alloc] initWithFrame:self.bounds];
-    [mTextView setAutoresizingMask:UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth];
-    //[mTextView setContentInset:UIEdgeInsetsMake(-8, -5, -8, -5)];
-    [mTextView setTextContainerInset:UIEdgeInsetsMake(0, -5, 0, -5)];
-    [mTextView setEditable:NO];
-    [mTextView setSelectable:NO];
-    [mTextView setBackgroundColor:[UIColor clearColor]];
-    [self addSubview:mTextView];
-    
     mIsTextDirty = NO;
     mSelected = -1;
     mComponents = [NSMutableArray array];
 }
 
-// text -> plainText + components
+// text -> plainText + components -> attributedText
 - (void)parse
 {
+    [mComponents removeAllObjects];
     NSString *text = [mText stringByReplacingOccurrencesOfString:@"<br>" withString:@"\n"];
     
     NSUInteger lastPos = 0;
@@ -149,29 +143,87 @@
         
         lastPos = position;
     }
-    
     mPlainText = text;
+    
+    if ([mPlainText length])
+    {
+        [self generateMutableAttributedString];
+        CGRect rect = self.bounds;
+        rect.size.width -= 10;
+        mTextSize = [mAttributedText boundingRectWithSize:CGSizeMake(rect.size.width, 9999) options:NSStringDrawingUsesLineFragmentOrigin context:nil].size;
+    }
+}
+
+
+- (void)generateMutableAttributedString
+{
+    // render text
+    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:mPlainText];
+    for (NSInteger i = 0; i < [mComponents count]; ++i)
+    {
+        MagicTextComponent *component = [mComponents objectAtIndex:i];
+        if ([component.text length])
+        {
+            [attributedString addAttributes:component.style.attributes range:NSMakeRange(component.position, component.text.length)];
+            if ([component.style.dynamicFont objectForKey:@"face"] && [component.style.dynamicFont objectForKey:@"size"])
+            {
+                NSString *face = [component.style.dynamicFont objectForKey:@"face"];
+                UIFont *font = [UIFont fontWithName:face size:[[component.style.dynamicFont objectForKey:@"size"] intValue]];
+                CTFontRef customFont = CTFontCreateWithName((__bridge CFStringRef)[font fontName], [font pointSize], NULL);
+                CFAttributedStringSetAttribute((CFMutableAttributedStringRef)attributedString, CFRangeMake(component.position, component.text.length), kCTFontAttributeName, customFont);
+                CFRelease(customFont);
+            }
+            else if ([component.style.dynamicFont objectForKey:@"size"])
+            {
+                CFTypeRef actualFontRef = CFAttributedStringGetAttribute((CFAttributedStringRef)attributedString, component.position, kCTFontAttributeName, nil);
+                CTFontRef fontRef = CTFontCreateCopyWithSymbolicTraits(actualFontRef, [[component.style.dynamicFont objectForKey:@"size"] intValue], nil, 0, 0);
+                if (fontRef)
+                {
+                    CFAttributedStringSetAttribute((CFMutableAttributedStringRef)attributedString, CFRangeMake(component.position, component.text.length), kCTFontAttributeName, fontRef);
+                    CFRelease(fontRef);
+                }
+                else
+                {
+                    UIFont *systemFont = [UIFont systemFontOfSize:[[component.style.dynamicFont objectForKey:@"size"] intValue]];
+                    fontRef = CTFontCreateWithName((__bridge CFStringRef)[systemFont fontName], [systemFont pointSize], NULL);
+                    CFAttributedStringSetAttribute((CFMutableAttributedStringRef)attributedString, CFRangeMake(component.position, component.text.length), kCTFontAttributeName, fontRef);
+                    CFRelease(fontRef);
+                }
+            }
+            if ([component.style.dynamicFont objectForKey:@"bold"])
+            {
+                CFTypeRef actualFontRef = CFAttributedStringGetAttribute((CFAttributedStringRef)attributedString, component.position, kCTFontAttributeName, nil);
+                CTFontRef boldFontRef = CTFontCreateCopyWithSymbolicTraits(actualFontRef, 0.0, nil, kCTFontBoldTrait, kCTFontBoldTrait);
+                if (boldFontRef)
+                {
+                    CFAttributedStringSetAttribute((CFMutableAttributedStringRef)attributedString, CFRangeMake(component.position, component.text.length), kCTFontAttributeName, boldFontRef);
+                    CFRelease(boldFontRef);
+                }
+            }
+            if ([component.style.dynamicFont objectForKey:@"italic"])
+            {
+                CFTypeRef actualFontRef = CFAttributedStringGetAttribute((CFAttributedStringRef)attributedString, component.position, kCTFontAttributeName, nil);
+                CTFontRef italicFontRef = CTFontCreateCopyWithSymbolicTraits(actualFontRef, 0.0, nil, kCTFontItalicTrait, kCTFontItalicTrait);
+                if (italicFontRef)
+                {
+                    CFAttributedStringSetAttribute((CFMutableAttributedStringRef)attributedString, CFRangeMake(component.position, component.text.length), kCTFontAttributeName, italicFontRef);
+                    CFRelease(italicFontRef);
+                }
+            }
+        }
+    }
+    
+    mAttributedText = attributedString;
 }
 
 - (void)drawRect:(CGRect)rect
 {
-    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:mPlainText];
-    
-    // render text
-    for (NSInteger i = 0; i < [mComponents count]; ++i)
+    if (!mAttributedText)
     {
-        MagicTextComponent *component = [mComponents objectAtIndex:i];
-        
-        [attributedString addAttributes:component.style.attributes range:NSMakeRange(component.position, component.text.length)];
-        
-        if (mSelected == i)
-        {
-            
-        }
+        return;
     }
-    [mTextView setAttributedText:attributedString];
     
-    //clear and create buttons
+    // clear and create buttons
     if (mIsTextDirty)
     {
         for (id button in [self subviews])
@@ -181,64 +233,81 @@
                 [button removeFromSuperview];
             }
         }
-
-        CGContextRef context = UIGraphicsGetCurrentContext();
-        CGContextSetTextMatrix(context, CGAffineTransformIdentity);
-        CGAffineTransform flipVertical = CGAffineTransformMake(1,0,0,-1,0,self.frame.size.height);
-        CGContextConcatCTM(context, flipVertical);
-        
-        CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString((CFAttributedStringRef)attributedString);
-        CGMutablePathRef path = CGPathCreateMutable();
-        CGPathAddRect(path, nil, mTextView.bounds);
-        CTFrameRef frame = CTFramesetterCreateFrame(framesetter,CFRangeMake(0, 0), path, NULL);
-        
-        for (NSInteger i = 0; i < [mComponents count]; ++i)
+    }
+    
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString((CFAttributedStringRef)mAttributedText);
+    CGMutablePathRef path = CGPathCreateMutable();
+    CGRect realRect = self.bounds;
+    realRect.size.width -= 10;
+    CGPathAddRect(path, nil, realRect);
+    CTFrameRef frame = CTFramesetterCreateFrame(framesetter, CFRangeMake(0, 0), path, nil);
+    
+    for (NSInteger i = 0; i < [mComponents count]; ++i)
+    {
+        MagicTextComponent *component = [mComponents objectAtIndex:i];
+        if ((mIsTextDirty && component.style.isClickable) || component.style.backgroundColor)
         {
-            MagicTextComponent *component = [mComponents objectAtIndex:i];
-            if (component.style.isClickable)
+            float height = 0.f;
+            CFArrayRef lines = CTFrameGetLines(frame);
+            for (CFIndex j = 0; j < CFArrayGetCount(lines); ++j)
             {
-                float height = 0.f;
-                CFArrayRef lines = CTFrameGetLines(frame);
-                for (CFIndex j = 0; j < CFArrayGetCount(lines); ++j)
+                CTLineRef line = (CTLineRef)CFArrayGetValueAtIndex(lines, j);
+                
+                CGFloat ascent = 0.f;
+                CGFloat descent = 0.f;
+                CGFloat leading = 0.f;
+                CTLineGetTypographicBounds(line, &ascent, &descent, &leading);
+                CFRange lineRange = CTLineGetStringRange(line);
+                CGPoint origin;
+                CTFrameGetLineOrigins(frame, CFRangeMake(j, 1), &origin);
+                
+                if ((component.position < lineRange.location && component.position+component.text.length>(u_int16_t)(lineRange.location)) || (component.position>=lineRange.location && component.position<lineRange.location+lineRange.length))
                 {
-                    CTLineRef line = (CTLineRef)CFArrayGetValueAtIndex(lines, j);
+                    CGFloat secondaryOffset;
+                    CGFloat begin = CTLineGetOffsetForStringIndex(line, component.position, &secondaryOffset);
+                    CGFloat end = CTLineGetOffsetForStringIndex(line, component.position + component.text.length, NULL);
+                    CGFloat width = end - begin;
                     
-                    CGFloat ascent = 0.f;
-                    CGFloat descent = 0.f;
-                    CGFloat leading = 0.f;
-                    CTLineGetTypographicBounds(line, &ascent, &descent, &leading);
-                    CFRange lineRange = CTLineGetStringRange(line);
-                    CGPoint origin;
-                    CTFrameGetLineOrigins(frame, CFRangeMake(j, 1), &origin);
-                    
-                    if ( (component.position < lineRange.location && component.position+component.text.length>(u_int16_t)(lineRange.location)) || (component.position>=lineRange.location && component.position<lineRange.location+lineRange.length))
+                    if (mIsTextDirty && component.style.isClickable)
                     {
-                        CGFloat secondaryOffset;
-                        CGFloat begin = CTLineGetOffsetForStringIndex(line, component.position, &secondaryOffset);
-                        CGFloat end = CTLineGetOffsetForStringIndex(line, component.position + component.text.length, NULL);
-                        CGFloat width = end - begin;
-                        
-                        MagicTextButton *button = [[MagicTextButton alloc] initWithFrame:CGRectMake(begin + origin.x, height, width, ascent + descent)];
-                        [button setBackgroundColor:[UIColor colorWithWhite:0 alpha:0.5]];
+                        MagicTextButton *button = [[MagicTextButton alloc] initWithFrame:CGRectMake(begin + origin.x + 5, height + 8, width, ascent + descent)]; // Todo: 添加button的关联性
+                        [button setBackgroundColor:[UIColor colorWithWhite:0 alpha:0]];
                         [button setIndex:i];
                         [button setData:component.text];
                         [button addTarget:self action:@selector(onButtonTouchDown:) forControlEvents:UIControlEventTouchDown];
                         [button addTarget:self action:@selector(onButtonTouchUpInside:) forControlEvents:UIControlEventTouchUpInside];
                         [button addTarget:self action:@selector(onButtonTouchUpOutside:) forControlEvents:UIControlEventTouchUpOutside];
+                        [button addTarget:self action:@selector(onButtonTouchDrag:withEvent:) forControlEvents:UIControlEventTouchDragInside];
+                        [button addTarget:self action:@selector(onButtonTouchDrag:withEvent:) forControlEvents:UIControlEventTouchDragOutside];
                         [self addSubview:button];
                     }
-
-                    height = self.frame.size.height - origin.y + descent + 3; // Todo: +3
+                    if (component.style.backgroundColor)
+                    {
+                        CGRect rectangle = CGRectMake(begin + origin.x + 5, height + 8, width, ascent + descent);
+                        CGContextSetFillColorWithColor(context, component.style.backgroundColor.CGColor);
+                        CGContextFillRect(context , rectangle);
+                    }
                 }
+                
+                height = self.frame.size.height - origin.y + descent;
             }
         }
-        
-        mIsTextDirty = NO;
+        if (mSelected == i)
+        {
+            //[mAttributedText addAttributes:@{NSBackgroundColorAttributeName : [UIColor colorWithRed:88/255.0 green:88/255.0 blue:88/255.0 alpha:0.4]} range:NSMakeRange(component.position, component.text.length)];
+        }
     }
     
-    /*
+    CGContextSetTextMatrix(context, CGAffineTransformIdentity);
+    CGAffineTransform flipVertical = CGAffineTransformMake(1, 0, 0, -1, 0, self.frame.size.height);
+    CGContextConcatCTM(context, flipVertical);
+    CGContextTranslateCTM(context, 5, -8);
     CTFrameDraw(frame, context);
-    */
+    CFRelease(path);
+    CFRelease(framesetter);
+    CFRelease(frame);
+    mIsTextDirty = NO;
 }
 
 #pragma mark - setter
@@ -264,6 +333,7 @@
 - (void)onButtonTouchDown:(id)sender
 {
     MagicTextButton *button = (MagicTextButton*)sender;
+    [button setBackgroundColor:[UIColor colorWithRed:88/255.0 green:88/255.0 blue:88/255.0 alpha:0.4]];
     mSelected = button.index;
     
     if (self.delegate)
@@ -274,13 +344,14 @@
         }
     }
     
-    NSLog(@"%s:%@", __FUNCTION__, button.data);
+    //NSLog(@"%s:%@", __FUNCTION__, button.data);
     [self setNeedsDisplay];
 }
 
 - (void)onButtonTouchUpInside:(id)sender
 {
     MagicTextButton *button = (MagicTextButton*)sender;
+    [button setBackgroundColor:[UIColor clearColor]];
     mSelected = -1;
     
     if (self.delegate)
@@ -291,13 +362,14 @@
         }
     }
     
-    NSLog(@"%s:%@", __FUNCTION__, button.data);
+    //NSLog(@"%s:%@", __FUNCTION__, button.data);
     [self setNeedsDisplay];
 }
 
 - (void)onButtonTouchUpOutside:(id)sender
 {
     MagicTextButton *button = (MagicTextButton*)sender;
+    [button setBackgroundColor:[UIColor clearColor]];
     mSelected = -1;
     
     if (self.delegate)
@@ -308,8 +380,30 @@
         }
     }
     
-    NSLog(@"%s:%@", __FUNCTION__, button.data);
+    //NSLog(@"%s:%@", __FUNCTION__, button.data);
     [self setNeedsDisplay];
+}
+
+- (void)onButtonTouchDrag:(UIButton*)sender withEvent:(UIEvent *)event // Todo: delegate
+{
+    UITouch *touch = [[event allTouches] anyObject];
+    CGFloat boundsExtension = 5.0f;
+    CGRect outerBounds = CGRectInset(sender.bounds, -1 * boundsExtension, -1 * boundsExtension);
+    BOOL touchOutside = !CGRectContainsPoint(outerBounds, [touch locationInView:sender]);
+    if (touchOutside)
+    {
+        // Outside
+        MagicTextButton *button = (MagicTextButton*)sender;
+        [button setBackgroundColor:[UIColor clearColor]];
+        mSelected = -1;
+        
+        //NSLog(@"%s:%@", __FUNCTION__, button.data);
+        [self setNeedsDisplay];
+    }
+    else
+    {
+        // Inside
+    }
 }
 
 @end

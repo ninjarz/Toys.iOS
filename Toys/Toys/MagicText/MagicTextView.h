@@ -10,7 +10,6 @@
 #import <CoreText/CoreText.h>
 #import "MagicTextComponent.h"
 
-
 @protocol MagicTextDelegate <NSObject>
 @optional
 
@@ -24,9 +23,11 @@
 @interface MagicTextView : UIView
 
 @property(nonatomic, nullable) NSString *text;
+@property(nonatomic) CGSize textSize;
 @property(assign, nullable) id<MagicTextDelegate> delegate;
 
 - (nonnull instancetype)initWithFrame:(CGRect)frame;
 - (void)parse;
 
 @end
+

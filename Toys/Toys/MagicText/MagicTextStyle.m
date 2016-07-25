@@ -8,7 +8,6 @@
 
 #import "MagicTextStyle.h"
 
-
 @interface MagicTextStyle() <NSMutableCopying>
 {
     NSString *mTag;
@@ -21,7 +20,9 @@
 @implementation MagicTextStyle
 
 @synthesize tag = mTag;
+@synthesize backgroundColor = mBackgroundColor;
 @synthesize attributes = mAttributes;
+@synthesize dynamicFont = mDynamicFont;
 @synthesize isClickable = mIsClickable;
 
 - (nonnull instancetype)initWithTag:(NSString*)tag;
@@ -29,7 +30,9 @@
     if (self = [super init])
     {
         mTag = tag;
+        mBackgroundColor = nil;
         mAttributes = [[NSMutableDictionary alloc] init];
+        mDynamicFont = [[NSMutableDictionary alloc] init];
         mIsClickable = NO;
     }
     
@@ -43,14 +46,24 @@
     [mAttributes setObject:color forKey:NSForegroundColorAttributeName];
 }
 
-- (void)setBackgroundColor:(nullable UIColor*)color
-{
-    [mAttributes setObject:color forKey:NSBackgroundColorAttributeName];
-}
-
 - (void)setFont:(nullable UIFont*)font
 {
     [mAttributes setValue:font forKey:NSFontAttributeName];
+}
+
+- (void)setUnderlineStyle:(NSUnderlineStyle)style
+{
+    [mAttributes setValue:@(style) forKey:NSUnderlineStyleAttributeName];
+}
+
+- (void)setUnderlineColor:(nullable UIColor*)color
+{
+    [mAttributes setValue:color forKey:NSUnderlineColorAttributeName];
+}
+
+- (void)addDynamicFont:(nullable NSDictionary*)dynamicFont
+{
+    [mDynamicFont addEntriesFromDictionary:dynamicFont];
 }
 
 #pragma mark - Copying
@@ -59,8 +72,10 @@
 {
     MagicTextStyle *copy = [MagicTextStyle allocWithZone:zone];
     copy->mTag = mTag;
+    copy->mBackgroundColor = [mBackgroundColor copy];
     copy->mAttributes = [mAttributes mutableCopy];
     copy->mIsClickable = mIsClickable;
+    copy->mDynamicFont = [mDynamicFont mutableCopy];
     
     return copy;
 }
@@ -77,6 +92,12 @@
     });
     
     return styles;
+}
+
++ (void)removeAllStyle
+{
+    NSMutableDictionary *styles = [self styles];
+    [styles removeAllObjects];
 }
 
 + (void)addStyle:(nonnull MagicTextStyle*)style
@@ -110,13 +131,13 @@
     return style;
 }
 
-/*
+
 #pragma mark - deprecated
 
-- (void)addAttributes:(NSDictionary*)attributes
+- (void)addAttributes:(nullable NSDictionary*)attributes
 {
     [mAttributes addEntriesFromDictionary:attributes];
 }
- */
+
 
 @end
