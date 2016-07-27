@@ -7,15 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3A36446B1D45F99F00F1F5DA /* MagicLineGraphView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A36446A1D45F99F00F1F5DA /* MagicLineGraphView.m */; };
+		3A3644701D46089A00F1F5DA /* MagicTextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A36446E1D46089A00F1F5DA /* MagicTextViewController.m */; };
 		3A3F3DAF1C55E3A9004A99FD /* MagicTextStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A3F3DAE1C55E3A9004A99FD /* MagicTextStyle.m */; };
+		3A7272451D470AA400CA0194 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A7272441D470AA400CA0194 /* MainWindow.xib */; };
+		3A83EFCF1D461E3D009551F1 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A83EFCD1D461E3D009551F1 /* MainViewController.m */; };
 		3A924E761C5772E0008F2105 /* MagicTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A924E751C5772E0008F2105 /* MagicTextView.m */; };
 		3A924E791C578232008F2105 /* MagicTextComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A924E781C578232008F2105 /* MagicTextComponent.m */; };
+		3A9365031D4741D000BD7CA2 /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A9365021D4741D000BD7CA2 /* MainViewController.xib */; };
+		3A9365051D4742D300BD7CA2 /* MagicTextViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A9365041D4742D300BD7CA2 /* MagicTextViewController.xib */; };
+		3A93650C1D4857D100BD7CA2 /* MagicBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A93650B1D4857D100BD7CA2 /* MagicBaseViewController.m */; };
 		3AE9A40A1C4686C50024B241 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AE9A4091C4686C50024B241 /* main.m */; };
 		3AE9A40D1C4686C50024B241 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AE9A40C1C4686C50024B241 /* AppDelegate.m */; };
-		3AE9A4101C4686C50024B241 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AE9A40F1C4686C50024B241 /* ViewController.m */; };
-		3AE9A4131C4686C50024B241 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3AE9A4111C4686C50024B241 /* Main.storyboard */; };
 		3AE9A4151C4686C50024B241 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3AE9A4141C4686C50024B241 /* Assets.xcassets */; };
-		3AE9A4181C4686C50024B241 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3AE9A4161C4686C50024B241 /* LaunchScreen.storyboard */; };
 		3AE9A4231C4686C50024B241 /* ToysTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AE9A4221C4686C50024B241 /* ToysTests.m */; };
 		3AE9A42E1C4686C50024B241 /* ToysUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AE9A42D1C4686C50024B241 /* ToysUITests.m */; };
 		3AE9A43E1C468BD90024B241 /* CircularRevealAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AE9A43D1C468BD90024B241 /* CircularRevealAnimator.m */; };
@@ -39,21 +43,28 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3A3644691D45F99F00F1F5DA /* MagicLineGraphView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MagicLineGraphView.h; sourceTree = "<group>"; };
+		3A36446A1D45F99F00F1F5DA /* MagicLineGraphView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MagicLineGraphView.m; sourceTree = "<group>"; };
+		3A36446D1D46089A00F1F5DA /* MagicTextViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MagicTextViewController.h; sourceTree = "<group>"; };
+		3A36446E1D46089A00F1F5DA /* MagicTextViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MagicTextViewController.m; sourceTree = "<group>"; };
 		3A3F3DAD1C55E3A9004A99FD /* MagicTextStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MagicTextStyle.h; path = MagicText/MagicTextStyle.h; sourceTree = "<group>"; };
 		3A3F3DAE1C55E3A9004A99FD /* MagicTextStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MagicTextStyle.m; path = MagicText/MagicTextStyle.m; sourceTree = "<group>"; };
+		3A7272441D470AA400CA0194 /* MainWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainWindow.xib; sourceTree = "<group>"; };
+		3A83EFCC1D461E3D009551F1 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
+		3A83EFCD1D461E3D009551F1 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 		3A924E741C5772E0008F2105 /* MagicTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MagicTextView.h; path = MagicText/MagicTextView.h; sourceTree = "<group>"; };
 		3A924E751C5772E0008F2105 /* MagicTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MagicTextView.m; path = MagicText/MagicTextView.m; sourceTree = "<group>"; };
 		3A924E771C578232008F2105 /* MagicTextComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MagicTextComponent.h; path = MagicText/MagicTextComponent.h; sourceTree = "<group>"; };
 		3A924E781C578232008F2105 /* MagicTextComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MagicTextComponent.m; path = MagicText/MagicTextComponent.m; sourceTree = "<group>"; };
+		3A9365021D4741D000BD7CA2 /* MainViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainViewController.xib; sourceTree = "<group>"; };
+		3A9365041D4742D300BD7CA2 /* MagicTextViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MagicTextViewController.xib; sourceTree = "<group>"; };
+		3A93650A1D4857D100BD7CA2 /* MagicBaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MagicBaseViewController.h; sourceTree = "<group>"; };
+		3A93650B1D4857D100BD7CA2 /* MagicBaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MagicBaseViewController.m; sourceTree = "<group>"; };
 		3AE9A4051C4686C50024B241 /* Toys.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Toys.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3AE9A4091C4686C50024B241 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		3AE9A40B1C4686C50024B241 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		3AE9A40C1C4686C50024B241 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		3AE9A40E1C4686C50024B241 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		3AE9A40F1C4686C50024B241 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
-		3AE9A4121C4686C50024B241 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		3AE9A4141C4686C50024B241 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		3AE9A4171C4686C50024B241 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3AE9A4191C4686C50024B241 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3AE9A41E1C4686C50024B241 /* ToysTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ToysTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3AE9A4221C4686C50024B241 /* ToysTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ToysTests.m; sourceTree = "<group>"; };
@@ -90,6 +101,28 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3A3644681D45F90B00F1F5DA /* MagicGraph */ = {
+			isa = PBXGroup;
+			children = (
+				3A3644691D45F99F00F1F5DA /* MagicLineGraphView.h */,
+				3A36446A1D45F99F00F1F5DA /* MagicLineGraphView.m */,
+			);
+			path = MagicGraph;
+			sourceTree = "<group>";
+		};
+		3A36446C1D46080300F1F5DA /* Test */ = {
+			isa = PBXGroup;
+			children = (
+				3A83EFCC1D461E3D009551F1 /* MainViewController.h */,
+				3A83EFCD1D461E3D009551F1 /* MainViewController.m */,
+				3A9365021D4741D000BD7CA2 /* MainViewController.xib */,
+				3A36446D1D46089A00F1F5DA /* MagicTextViewController.h */,
+				3A36446E1D46089A00F1F5DA /* MagicTextViewController.m */,
+				3A9365041D4742D300BD7CA2 /* MagicTextViewController.xib */,
+			);
+			path = Test;
+			sourceTree = "<group>";
+		};
 		3A3F3DAC1C55E32C004A99FD /* MagicText */ = {
 			isa = PBXGroup;
 			children = (
@@ -101,6 +134,15 @@
 				3A924E781C578232008F2105 /* MagicTextComponent.m */,
 			);
 			name = MagicText;
+			sourceTree = "<group>";
+		};
+		3A9365061D48541200BD7CA2 /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				3A93650A1D4857D100BD7CA2 /* MagicBaseViewController.h */,
+				3A93650B1D4857D100BD7CA2 /* MagicBaseViewController.m */,
+			);
+			path = Util;
 			sourceTree = "<group>";
 		};
 		3AE9A3FC1C4686C50024B241 = {
@@ -126,15 +168,15 @@
 		3AE9A4071C4686C50024B241 /* Toys */ = {
 			isa = PBXGroup;
 			children = (
+				3A9365061D48541200BD7CA2 /* Util */,
+				3A36446C1D46080300F1F5DA /* Test */,
+				3A3644681D45F90B00F1F5DA /* MagicGraph */,
 				3A3F3DAC1C55E32C004A99FD /* MagicText */,
 				3AE9A43B1C4686F60024B241 /* Animator */,
 				3AE9A40B1C4686C50024B241 /* AppDelegate.h */,
 				3AE9A40C1C4686C50024B241 /* AppDelegate.m */,
-				3AE9A40E1C4686C50024B241 /* ViewController.h */,
-				3AE9A40F1C4686C50024B241 /* ViewController.m */,
-				3AE9A4111C4686C50024B241 /* Main.storyboard */,
+				3A7272441D470AA400CA0194 /* MainWindow.xib */,
 				3AE9A4141C4686C50024B241 /* Assets.xcassets */,
-				3AE9A4161C4686C50024B241 /* LaunchScreen.storyboard */,
 				3AE9A4191C4686C50024B241 /* Info.plist */,
 				3AE9A4081C4686C50024B241 /* Supporting Files */,
 			);
@@ -278,9 +320,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3AE9A4181C4686C50024B241 /* LaunchScreen.storyboard in Resources */,
+				3A7272451D470AA400CA0194 /* MainWindow.xib in Resources */,
+				3A9365051D4742D300BD7CA2 /* MagicTextViewController.xib in Resources */,
 				3AE9A4151C4686C50024B241 /* Assets.xcassets in Resources */,
-				3AE9A4131C4686C50024B241 /* Main.storyboard in Resources */,
+				3A9365031D4741D000BD7CA2 /* MainViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -307,11 +350,14 @@
 			files = (
 				3A924E791C578232008F2105 /* MagicTextComponent.m in Sources */,
 				3A924E761C5772E0008F2105 /* MagicTextView.m in Sources */,
-				3AE9A4101C4686C50024B241 /* ViewController.m in Sources */,
+				3A83EFCF1D461E3D009551F1 /* MainViewController.m in Sources */,
+				3A3644701D46089A00F1F5DA /* MagicTextViewController.m in Sources */,
 				3AE9A40D1C4686C50024B241 /* AppDelegate.m in Sources */,
 				3AE9A43E1C468BD90024B241 /* CircularRevealAnimator.m in Sources */,
+				3A36446B1D45F99F00F1F5DA /* MagicLineGraphView.m in Sources */,
 				3AE9A40A1C4686C50024B241 /* main.m in Sources */,
 				3A3F3DAF1C55E3A9004A99FD /* MagicTextStyle.m in Sources */,
+				3A93650C1D4857D100BD7CA2 /* MagicBaseViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -345,25 +391,6 @@
 			targetProxy = 3AE9A42A1C4686C50024B241 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		3AE9A4111C4686C50024B241 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				3AE9A4121C4686C50024B241 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		3AE9A4161C4686C50024B241 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				3AE9A4171C4686C50024B241 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		3AE9A4301C4686C50024B241 /* Debug */ = {

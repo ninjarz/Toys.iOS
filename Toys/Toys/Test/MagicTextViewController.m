@@ -1,25 +1,30 @@
 //
-//  ViewController.m
+//  MagicTextViewController.m
 //  Toys
 //
-//  Created by linzisheng on 16/1/13.
+//  Created by linzisheng on 16/7/25.
 //
 //
 
-#import "ViewController.h"
+#import "MagicTextViewController.h"
 #import "MagicTextView.h"
 #import "MagicTextStyle.h"
 
 
-@interface ViewController() <MagicTextDelegate>
+@interface MagicTextViewController() <MagicTextDelegate>
 {
     IBOutlet UIView *mMagicView;
+    
     MagicTextView *magicTextView;
 }
 
 @end
 
-@implementation ViewController
+@interface MagicTextViewController ()
+
+@end
+
+@implementation MagicTextViewController
 
 - (void)viewDidLoad
 {
@@ -86,7 +91,7 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-
+    
 }
 
 #pragma mark - MagicTextDelegate
